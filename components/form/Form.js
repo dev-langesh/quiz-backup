@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from "@mui/material";
 import React, { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
@@ -8,6 +9,7 @@ export default function Form() {
     rollNo: null,
   });
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
 
   function changeHandler(e) {
     setState((prev) => {
@@ -22,8 +24,14 @@ export default function Form() {
     e.preventDefault();
 
     if (!state.name || !state.rollNo) {
-      return setError("Fill All The Fields");
+      setError("Fill All The Fields");
+      setOpen(true);
+      return;
     }
+  }
+
+  function handleClose() {
+    setOpen(false);
   }
 
   return (
@@ -49,6 +57,15 @@ export default function Form() {
             value={state.rollNo}
           />
           <Button>Submit</Button>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
         </form>
       </main>
     </section>
