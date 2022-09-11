@@ -42,9 +42,8 @@ export default function Form() {
 
     const data = await response.json();
 
-    setLoading(false);
-
     if (data.error) {
+      setLoading(false);
       setError(data.error);
       setOpen(true);
       return;
@@ -86,7 +85,7 @@ export default function Form() {
           </form>
         </main>
       )}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           {error}
         </Alert>
