@@ -1,17 +1,25 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import QuizContainer from "../components/quiz/QuizContainer";
 
 export default function Quiz() {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const effRan = useRef(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (effRan.current) {
-      let user = window.localStorage.getItem("user");
-      user = JSON.parse(user);
-      console.log(user);
-      if (!user.name) {
-        setError(true);
+      let id = window.localStorage.getItem("id");
+      let isStarted = window.localStorage.getItem("started");
+
+      if (!id) {
+        router.push("/");
+      }
+
+      if (isStarted) setError("You have already done the quiz!");
+      else {
+        window.localStorage.setItem("started", "true");
       }
     }
 
@@ -21,7 +29,11 @@ export default function Quiz() {
   return (
     <section className=" bg-gray-900 text-white h-screen w-screen flex items-center justify-center flex-col space-y-6">
       <main className="space-y-4 p-8 shadow-2xl shadow-black rounded flex flex-col items-center justify-center">
-        {error ? <h1>Register and try again!</h1> : <QuizContainer />}
+        {error ? (
+          <h1 className="font-bold text-center tracking-wider">{error}</h1>
+        ) : (
+          <QuizContainer />
+        )}
       </main>
     </section>
   );
