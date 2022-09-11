@@ -48,6 +48,7 @@ export default function Form() {
       setOpen(true);
       return;
     } else {
+      window.localStorage.setItem("user", JSON.stringify(data));
       router.push("/quiz");
     }
   }
