@@ -1,9 +1,54 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { getMarks } from "../src/features/markSlice";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMarks, setResult } from "../src/features/markSlice";
 
 export default function result() {
   const result = useSelector(getMarks);
+
+  const effRan = useRef(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!effRan.current) {
+      const id = window.localStorage.getItem("id");
+
+      async function getMarks() {
+        const response = await fetch(`/api/get-result/${id}`, {
+          method: "GET",
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (!data.score) postMarks();
+        else
+          dispatch(
+            setResult({
+              score: data.score,
+              correctAnswers: data.correctAnswers,
+            })
+          );
+      }
+
+      getMarks();
+
+      async function postMarks() {
+        console.log(result);
+        const response = await fetch(`/api/set-result/${id}`, {
+          method: "PUT",
+          body: JSON.stringify(result),
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+      }
+
+      return () => (effRan.current = true);
+    }
+  }, []);
 
   return (
     <section className=" bg-gray-900 text-white h-screen w-screen flex items-center justify-center flex-col space-y-6">

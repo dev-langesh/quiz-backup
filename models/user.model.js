@@ -11,7 +11,8 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    score: Number,
+    score: { type: Number, default: 0 },
+    correctAnswers: { type: Number, default: 0 },
   },
   { collection: "users", timestamps: true }
 );
