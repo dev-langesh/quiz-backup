@@ -20,8 +20,6 @@ export default function result() {
 
         const data = await response.json();
 
-        console.log(data);
-
         if (!data.score) postMarks();
         else
           dispatch(
@@ -35,15 +33,12 @@ export default function result() {
       getMarks();
 
       async function postMarks() {
-        console.log(result);
         const response = await fetch(`/api/set-result/${id}`, {
           method: "PUT",
           body: JSON.stringify(result),
         });
 
         const data = await response.json();
-
-        console.log(data);
       }
 
       return () => (effRan.current = true);
