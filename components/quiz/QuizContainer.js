@@ -15,15 +15,14 @@ export default function QuizContainer() {
   const effRan = useRef(false);
 
   useEffect(() => {
-    if (effRan.current === true) {
+    if (!effRan.current) {
       setInterval(() => {
         setTimer((prev) => {
           return prev - 1;
         });
       }, 1000);
+      return () => (effRan.current = true);
     }
-
-    return () => (effRan.current = true);
   }, []);
 
   useEffect(() => {
