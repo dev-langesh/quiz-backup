@@ -6,7 +6,7 @@ import Input from "./Input";
 export default function Form() {
   const [state, setState] = useState({
     name: "",
-    rollNo: null,
+    rollNo: "",
   });
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
@@ -20,13 +20,28 @@ export default function Form() {
     });
   }
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
 
     if (!state.name || !state.rollNo) {
       setError("Fill All The Fields");
       setOpen(true);
       return;
+    }
+
+    const response = await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify(state),
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      setError(data.error);
+      setOpen(true);
+      return;
+    } else {
+      console.log(data);
     }
   }
 
