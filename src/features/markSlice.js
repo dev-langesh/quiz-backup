@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const markSlice = createSlice({
   name: "marks",
-  initialState: { marks: 0, correctAnswers: 0 },
+  initialState: { score: 0, correctAnswers: 0 },
   reducers: {
     increaseMark: (state) => {
-      state.marks += 5;
+      state.score += 5;
       state.correctAnswers += 1;
     },
   },

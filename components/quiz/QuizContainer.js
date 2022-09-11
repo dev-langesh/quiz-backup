@@ -7,12 +7,15 @@ import {
   getQuestionNumber,
   nextQuestion,
 } from "../../src/features/questionCountSlice";
+import { useRouter } from "next/router";
 
 export default function QuizContainer() {
   const questionNumber = useSelector(getQuestionNumber);
   const [timer, setTimer] = useState(10);
 
   const effRan = useRef(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!effRan.current) {
@@ -27,8 +30,12 @@ export default function QuizContainer() {
 
   useEffect(() => {
     if (timer < 0) {
-      dispatch(nextQuestion());
-      setTimer(10);
+      if (questionNumber >= questions.length - 1) {
+        router.push("/result");
+      } else {
+        dispatch(nextQuestion());
+        setTimer(10);
+      }
     }
   }, [timer]);
 
@@ -40,8 +47,12 @@ export default function QuizContainer() {
     if (isCorrect) {
       dispatch(increaseMark());
     }
-
-    dispatch(nextQuestion());
+    if (questionNumber >= questions.length - 1) {
+      router.push("/result");
+    } else {
+      dispatch(nextQuestion());
+      setTimer(10);
+    }
   }
 
   return (

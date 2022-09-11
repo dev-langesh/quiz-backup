@@ -7,9 +7,10 @@ export default function Quiz() {
 
   useEffect(() => {
     if (effRan.current) {
-      const user = window.localStorage.getItem("user");
+      let user = window.localStorage.getItem("user");
+      user = JSON.parse(user);
       console.log(user);
-      if (!user) {
+      if (!user.name) {
         setError(true);
       }
     }
