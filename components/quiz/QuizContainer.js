@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { questions } from "../../models/questions";
 import OptionButton from "./OptionButton";
@@ -10,6 +10,28 @@ import {
 
 export default function QuizContainer() {
   const questionNumber = useSelector(getQuestionNumber);
+  const [timer, setTimer] = useState(10);
+
+  const effRan = useRef(false);
+
+  useEffect(() => {
+    if (effRan.current === true) {
+      setInterval(() => {
+        setTimer((prev) => {
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => (effRan.current = true);
+  }, []);
+
+  useEffect(() => {
+    if (timer < 0) {
+      dispatch(nextQuestion());
+      setTimer(10);
+    }
+  }, [timer]);
 
   const dispatch = useDispatch();
 
@@ -25,7 +47,8 @@ export default function QuizContainer() {
 
   return (
     <>
-      <h1 className="font-bold text-xl tracking-wide py-4 text-center">
+      <h1>{timer}</h1>
+      <h1 className="font-bold text-md sm:text-xl tracking-wide py-4 text-center">
         {questions[questionNumber].question}
       </h1>
       <section className="w-full sm:w-[300px] space-y-6">
