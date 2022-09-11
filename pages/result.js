@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMarks, setResult } from "../src/features/markSlice";
 
-export default function result() {
+export default function Result() {
   const result = useSelector(getMarks);
 
   const effRan = useRef(false);
