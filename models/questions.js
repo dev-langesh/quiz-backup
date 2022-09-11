@@ -1,6 +1,6 @@
 export const questions = [
   {
-    question: "What do you mean by cryptography?",
+    question: "What do you mean by cryptography1?",
     answers: [
       {
         id: 1,
@@ -25,7 +25,7 @@ export const questions = [
     ],
   },
   {
-    question: "What do you mean by cryptography?",
+    question: "What do you mean by cryptography2?",
     answers: [
       {
         id: 1,
@@ -50,7 +50,7 @@ export const questions = [
     ],
   },
   {
-    question: "What do you mean by cryptography?",
+    question: "What do you mean by cryptography3?",
     answers: [
       {
         id: 1,
