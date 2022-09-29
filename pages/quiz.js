@@ -13,14 +13,14 @@ export default function Quiz() {
       let id = window.localStorage.getItem("id");
       let isStarted = window.localStorage.getItem("started");
 
+      console.log(isStarted);
+
       if (!id) {
         router.push("/");
       }
 
       if (isStarted) setError("You have already done the quiz!");
-      else {
-        window.localStorage.setItem("started", "true");
-      }
+      window.localStorage.setItem("started", "true");
     }
 
     return () => (effRan.current = true);
