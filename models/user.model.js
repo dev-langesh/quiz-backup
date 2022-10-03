@@ -11,6 +11,10 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+    started: {
+      type: String,
+      default: false,
+    },
     score: { type: Number, default: 0 },
     correctAnswers: { type: Number, default: 0 },
   },

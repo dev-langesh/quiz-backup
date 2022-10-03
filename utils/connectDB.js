@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-function connectDB() {
+export function connectDB() {
   const db = mongoose.connect(
     process.env.MONGO_URI,
     {
@@ -13,5 +13,3 @@ function connectDB() {
     }
   );
 }
-
-export default connectDB;

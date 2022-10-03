@@ -1,5 +1,6 @@
-import connectDB from "../../utils/connectDB";
+import { connectDB } from "../../utils/connectDB";
 import { User } from "../../models/user.model";
+
 connectDB();
 
 export default async function user(req, res) {
