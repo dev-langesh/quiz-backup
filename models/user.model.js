@@ -12,7 +12,7 @@ const userSchema = new Schema(
       unique: true,
     },
     started: {
-      type: String,
+      type: Boolean,
       default: false,
     },
     score: { type: Number, default: 0 },

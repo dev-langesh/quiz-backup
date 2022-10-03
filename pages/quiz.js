@@ -1,3 +1,5 @@
+import { CircularProgress, Link } from "@mui/material";
+import { convertLength } from "@mui/material/styles/cssUtils";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import QuizContainer from "../components/quiz/QuizContainer";
@@ -5,36 +7,67 @@ import QuizContainer from "../components/quiz/QuizContainer";
 export default function Quiz() {
   const [error, setError] = useState("");
   const effRan = useRef(false);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
   useEffect(() => {
     if (effRan.current) {
       let id = window.localStorage.getItem("id");
-      let isStarted = window.localStorage.getItem("started");
-
-      console.log(isStarted);
 
       if (!id) {
         router.push("/");
       }
 
-      if (isStarted) setError("You have already done the quiz!");
-      window.localStorage.setItem("started", "true");
+      async function validateUser() {
+        const response = await fetch("/api/is-started-quiz", {
+          method: "POST",
+          body: JSON.stringify({
+            id,
+          }),
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.isStarted) {
+          setError("You have already responded to this quiz");
+        }
+      }
+
+      validateUser();
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
 
     return () => (effRan.current = true);
   }, []);
 
   return (
-    <section className=" bg-gray-900 text-white h-screen w-screen flex items-center justify-center flex-col space-y-6">
-      <main className="space-y-4 p-8 shadow-2xl shadow-black rounded flex flex-col items-center justify-center">
-        {error ? (
-          <h1 className="font-bold text-center tracking-wider">{error}</h1>
-        ) : (
-          <QuizContainer />
-        )}
-      </main>
+    <section className=" bg-gray-900 text-white h-screen w-screen flex items-center justify-center flex-col space-y-6 p-4">
+      {loading ? (
+        <>
+          <CircularProgress />
+        </>
+      ) : (
+        <main className="space-y-4 p-8 bg-gray-800 shadow-2xl shadow-black rounded flex flex-col items-center justify-center">
+          {error ? (
+            <div className="flex items-center flex-col space-y-6">
+              <h1 className="font-bold text-center tracking-wider">{error}</h1>
+              <a href="/result">
+                <span className="no-underline text-blue-600 hover:tracking-wider">
+                  Result
+                </span>
+              </a>
+            </div>
+          ) : (
+            <QuizContainer />
+          )}
+        </main>
+      )}
     </section>
   );
 }

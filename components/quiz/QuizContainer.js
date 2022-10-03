@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 export default function QuizContainer() {
   const questionNumber = useSelector(getQuestionNumber);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(100);
 
   const effRan = useRef(false);
 
