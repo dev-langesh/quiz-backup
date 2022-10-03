@@ -57,11 +57,11 @@ export default function Quiz() {
           {error ? (
             <div className="flex items-center flex-col space-y-6">
               <h1 className="font-bold text-center tracking-wider">{error}</h1>
-              <a href="/result">
-                <span className="no-underline text-blue-600 hover:tracking-wider">
+              <Link className="no-underline" href="/result">
+                <span className=" text-blue-600 hover:tracking-wider">
                   Result
                 </span>
-              </a>
+              </Link>
             </div>
           ) : (
             <QuizContainer />
