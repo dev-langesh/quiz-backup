@@ -6,6 +6,7 @@ connectDB();
 export default async function user(req, res) {
   if (req.method === "POST") {
     try {
+      connectDB();
       const { name, rollNo } = JSON.parse(req.body);
 
       const user = await User.create({ name, rollNo });

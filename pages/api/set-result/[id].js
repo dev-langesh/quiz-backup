@@ -1,8 +1,11 @@
 import { User } from "../../../models/user.model";
+import { connectDB } from "../../../utils/connectDB";
 
 export default async function setResult(req, res) {
   if (req.method === "PUT") {
     try {
+      connectDB();
+
       const { id } = req.query;
 
       const body = JSON.parse(req.body);

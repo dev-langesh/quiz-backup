@@ -1,8 +1,11 @@
 import { User } from "../../../models/user.model";
+import { connectDB } from "../../../utils/connectDB";
 
 export default async function getResult(req, res) {
   try {
     if (req.method === "GET") {
+      connectDB();
+
       const { id } = req.query;
 
       const user = await User.findById(id).select("score correctAnswers");

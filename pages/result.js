@@ -66,6 +66,15 @@ export default function Result() {
           </main>
         </>
       )}
+
+      <div className="absolute bottom-6 right-6">
+        <a
+          className="px-6 py-2 bg-blue-500 text-white"
+          href="https://www.langesh.in"
+        >
+          About the dev
+        </a>
+      </div>
     </section>
   );
 }
